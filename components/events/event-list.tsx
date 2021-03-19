@@ -1,17 +1,16 @@
-import { DummyEvent } from '../../dummy-data';
+import { Event } from '../../interfaces';
 import EventItem from './event-item';
 
 import classes from './event-list.module.css';
 
 interface EventListProps {
-  events: DummyEvent[];
+  events?: Event[];
 }
 
 const EventList: React.FC<EventListProps> = ({ events }) => {
-  const {} = events;
   return (
     <ul className={classes.list}>
-      {events.map((event) => (
+      {events?.map((event) => (
         <EventItem
           key={event.id}
           id={event.id}

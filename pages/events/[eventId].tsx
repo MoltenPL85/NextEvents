@@ -1,38 +1,60 @@
-import { useRouter } from 'next/dist/client/router';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import EventContent from '../../components/event-detail/event-content';
 import EventLogistics from '../../components/event-detail/event-logistics';
 import EventSummary from '../../components/event-detail/event-summary';
-import ErrorAlert from '../../components/ui/error-alert';
-import { getEventById } from '../../dummy-data';
+import { getEventById, getFeaturedEvents } from '../../heplers/api-util';
+import { Event } from '../../interfaces';
 
-const EventDetailPage = () => {
-  const router = useRouter();
+interface EventDetailPageProps {
+  selectedEvent: Event;
+}
 
-  const eventId = router.query.eventId;
-  const event = getEventById(eventId);
-
-  if (!event) {
+const EventDetailPage = ({ selectedEvent }: EventDetailPageProps) => {
+  if (!selectedEvent) {
     return (
-      <ErrorAlert>
-        <p>No event found!</p>
-      </ErrorAlert>
+      <div className="center">
+        <p>Loading...</p>
+      </div>
     );
   }
 
   return (
     <>
-      <EventSummary title={event.title} />
+      <EventSummary title={selectedEvent.title} />
       <EventLogistics
-        date={event.date}
-        address={event.location}
-        image={event.image}
-        imageAlt={event.title}
+        date={selectedEvent.date}
+        address={selectedEvent.location}
+        image={selectedEvent.image}
+        imageAlt={selectedEvent.title}
       />
       <EventContent>
-        <p>{event.description}</p>
+        <p>{selectedEvent.description}</p>
       </EventContent>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const eventId = params?.eventId;
+
+  const event = eventId && (await getEventById(eventId));
+
+  return {
+    props: {
+      selectedEvent: event,
+    },
+    revalidate: 30,
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const events = await getFeaturedEvents();
+
+  const paths = events.map((event) => ({ params: { eventId: event.id } }));
+  return {
+    paths,
+    fallback: 'blocking',
+  };
 };
 
 export default EventDetailPage;

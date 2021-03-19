@@ -1,4 +1,4 @@
-import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
+import { GetStaticProps } from 'next';
 import React from 'react';
 import EventList from '../components/events/event-list';
 import { getFeaturedEvents } from '../heplers/api-util';
@@ -22,6 +22,7 @@ export const getStaticProps: GetStaticProps = async () => {
     props: {
       events: featuredEvents,
     },
+    revalidate: 1800,
   };
 };
 

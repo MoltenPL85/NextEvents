@@ -1,12 +1,14 @@
-import { DummyEvent } from '../../dummy-data';
 import Button from '../ui/button';
 import DateIcon from '../icons/date-icon';
 import AddressIcon from '../icons/address-icon';
 
 import classes from './event-item.module.css';
 import ArrowRightIcon from '../icons/arrow-right-icon';
+import { Event } from '../../interfaces';
 
-const EventItem: React.FC<Partial<DummyEvent>> = (event) => {
+const EventItem: React.FC<Omit<Event, 'description' | 'isFeatured'>> = (
+  event
+) => {
   const { title, image, date, location, id } = event;
 
   const humanReadableDate = new Date(date).toLocaleDateString('en-US', {
