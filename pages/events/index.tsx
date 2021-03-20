@@ -1,5 +1,6 @@
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/dist/client/router';
+import Head from 'next/head';
 import EventList from '../../components/events/event-list';
 import EventSearch from '../../components/events/event-search';
 import { getAllEvents } from '../../heplers/api-util';
@@ -20,6 +21,13 @@ const AllEventsPage = ({ events }: AllEventsPageProps) => {
 
   return (
     <>
+      <Head>
+        <title>All Events</title>
+        <meta
+          name="description"
+          content="Find a lot of great events allow you to evolve..."
+        />
+      </Head>
       <EventSearch onSearch={findEventsHandler} />
       <EventList events={events} />
     </>

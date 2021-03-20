@@ -1,4 +1,5 @@
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import React from 'react';
 import EventList from '../components/events/event-list';
 import { getFeaturedEvents } from '../heplers/api-util';
@@ -11,6 +12,13 @@ type HomePageProps = {
 const HomePage = ({ events }: HomePageProps) => {
   return (
     <div>
+      <Head>
+        <title>Events</title>
+        <meta
+          name="description"
+          content="Find a lot of great events allow you to evolve..."
+        />
+      </Head>
       <EventList events={events} />
     </div>
   );
