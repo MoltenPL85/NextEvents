@@ -3,6 +3,7 @@ import Head from 'next/head';
 import EventContent from '../../components/event-detail/event-content';
 import EventLogistics from '../../components/event-detail/event-logistics';
 import EventSummary from '../../components/event-detail/event-summary';
+import Comments from '../../components/input/comments';
 import { getEventById, getFeaturedEvents } from '../../heplers/api-util';
 import { Event } from '../../interfaces';
 
@@ -35,6 +36,7 @@ const EventDetailPage = ({ selectedEvent }: EventDetailPageProps) => {
       <EventContent>
         <p>{selectedEvent.description}</p>
       </EventContent>
+      <Comments eventId={selectedEvent.id} />
     </>
   );
 };

@@ -12,3 +12,18 @@ export interface DateFilter {
   year: number;
   month: number;
 }
+
+export interface CommentData {
+  eventId: string;
+  email: string;
+  name: string;
+  text: string;
+}
+
+export interface CommentDataDB {
+  _id?: string;
+  eventId: string;
+  email: string;
+  name: string;
+  text: string;
+}
